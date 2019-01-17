@@ -4,8 +4,7 @@ ARG NODE_IMAGE_VERSION=10-alpine
 
 # Create base image
 FROM node:${NODE_IMAGE_VERSION} as base
-RUN apk add --no-cache tini python make g++ supervisor
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+RUN apk add --no-cache tini python make g++
 
 # Install process engine
 FROM base as process_engine
@@ -18,7 +17,7 @@ RUN npm install -g @process-engine/process_engine_runtime@${PROCESS_ENGINE_VERSI
 # Create release
 FROM process_engine as release
 EXPOSE 8000
-ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["process-engine"]
 
 # Set a health check
 HEALTHCHECK --interval=5s \
