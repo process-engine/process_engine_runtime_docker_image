@@ -5,12 +5,12 @@
 # ProcessEngine Runtime Docker Fullimage
 
 Dieses Projekt beinhaltet eine Dockerfile um eine vollfunktionierende ProcessEngine Runtime.
-Es werden die NPM packages der process-engine-runtime verwendet 
+Es werden die NPM packages der process-engine-runtime verwendet
 und alle Abhängigkeiten installiert
 
 ## Was sind die Ziele dieses Projekts?
 
-Ziel dieses Projektes ist es, ein vollumfängliches Docker image zur Benutzung 
+Ziel dieses Projektes ist es, ein vollumfängliches Docker image zur Benutzung
 der ProcessEngine Runtime zu erzeugen.
 
 ## Relevante URLs
@@ -37,6 +37,32 @@ docker run -p 8000:8000  5minds/process_engine_runtime:latest
 ```
 
 Die ProcessEngine API ist unter `http://localhost:8000` erreichbar.
+
+### Persistierung von Daten und Konfiguration
+
+Standardmäßig werden alle Daten und die Konfiguration in zwei Volumes abgelegt.
+Beide Volumes werden automatisch mit dem Start des Containers erstellt.
+
+**Benutzerdefinierte Volumes benutzen**
+
+1. Volumes anlegen
+
+    ```
+    docker create process-engine-storage
+    docker create process-engine-configuration
+    ```
+
+2. Container mit Volume starten
+
+    ```
+    docker run \
+      --mount source=process-engine-db,target=/root/.config/process_engine_runtime/ \
+      --mount source=process-engine-configuration,target=/usr/local/lib/node_modules/@process-engine/process_engine_runtime/config/ \
+      \
+      --publish 8000:8000 \
+      \
+      5minds/process_engine_runtime:latest
+    ```
 
 ### Voraussetzungen
 
