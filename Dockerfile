@@ -19,7 +19,7 @@ FROM process_engine as release
 EXPOSE 8000
 CMD ["process-engine"]
 
-VOLUME [ "/root/.config/process_engine_runtime/databases/" ]
+VOLUME [ "/root/.config/process_engine_runtime/" ]
 VOLUME [ "/usr/local/lib/node_modules/@process-engine/process_engine_runtime/config/" ]
 
 # Set a health check
