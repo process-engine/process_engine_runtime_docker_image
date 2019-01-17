@@ -56,16 +56,16 @@ Beide Volumes werden automatisch mit dem Start des Containers erstellt und gemou
 
 1. Volumes anlegen
 
-   ```
-   docker create process-engine-storage
-   docker create process-engine-configuration
+   ```bash
+   docker volume create process-engine-storage
+   docker volume create process-engine-configuration
    ```
 
 2. Container mit Volume starten
 
-   ```
+   ```bash
    docker run \
-     --mount source=process-engine-db,target=/root/.config/process_engine_runtime/ \
+     --mount source=process-engine-storage,target=/root/.config/process_engine_runtime/ \
      --mount source=process-engine-configuration,target=/usr/local/lib/node_modules/@process-engine/process_engine_runtime/config/ \
      \
      --publish 8000:8000 \
