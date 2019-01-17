@@ -1,10 +1,12 @@
 # Supported tags and respective Dockerfile links
+
 * `latest`, `master` [(master/Dockerfile)](https://github.com/process-engine/process_engine_runtime/blob/master/Dockerfile)
 * `develop` [(develop/Dockerfile)](https://github.com/process-engine/process_engine_runtime/blob/develop/Dockerfile)
 
 # ProcessEngine Runtime Docker Fullimage
 
 Dieses Projekt beinhaltet eine Dockerfile um eine vollfunktionierende ProcessEngine Runtime.
+
 Es werden die NPM packages der process-engine-runtime verwendet
 und alle Abhängigkeiten installiert
 
@@ -36,33 +38,40 @@ Der Container lässt sich mit folgendem Befehl starten:
 docker run -p 8000:8000  5minds/process_engine_runtime:latest
 ```
 
-Die ProcessEngine API ist unter `http://localhost:8000` erreichbar.
+Nach dem Start, ist die ProcessEngine API ist unter
+`http://localhost:8000` erreichbar.
 
-### Persistierung von Daten und Konfiguration
+Es kann bei Start der Docker-Containers ein eindere Port gewählt werden.
 
-Standardmäßig werden alle Daten und die Konfiguration in zwei Volumes abgelegt.
-Beide Volumes werden automatisch mit dem Start des Containers erstellt.
+### Ablageort von Daten und Konfiguration
+
+Standardmäßig werden alle Daten und die Konfiguration in zwei Volumes abgelegt:
+
+1. process-engine-db
+1. process-engine-configuration
+
+Beide Volumes werden automatisch mit dem Start des Containers erstellt und gemountet.
 
 **Benutzerdefinierte Volumes benutzen**
 
 1. Volumes anlegen
 
-    ```
-    docker create process-engine-storage
-    docker create process-engine-configuration
-    ```
+   ```
+   docker create process-engine-storage
+   docker create process-engine-configuration
+   ```
 
 2. Container mit Volume starten
 
-    ```
-    docker run \
-      --mount source=process-engine-db,target=/root/.config/process_engine_runtime/ \
-      --mount source=process-engine-configuration,target=/usr/local/lib/node_modules/@process-engine/process_engine_runtime/config/ \
-      \
-      --publish 8000:8000 \
-      \
-      5minds/process_engine_runtime:latest
-    ```
+   ```
+   docker run \
+     --mount source=process-engine-db,target=/root/.config/process_engine_runtime/ \
+     --mount source=process-engine-configuration,target=/usr/local/lib/node_modules/@process-engine/process_engine_runtime/config/ \
+     \
+     --publish 8000:8000 \
+     \
+     5minds/process_engine_runtime:latest
+   ```
 
 ### Voraussetzungen
 
@@ -87,6 +96,7 @@ docker build --build-arg NODE_IMAGE_VERSION=10-alpine \
              --tag 5minds/process_engine_runtime:latest .
 ```
 
-
 ### Wen kann ich auf das Projekt ansprechen?
+
 * [Robin Lenz](mailto:robin.lenz@5minds.de)
+* [Christoph Gnip](mailto:christoph.gnip@5minds.de)
