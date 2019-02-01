@@ -97,7 +97,7 @@ node {
 
   def dockerfile_builds = [:];
 
-  def process_engine_version = branch_is_master ? 'master' : 'develop';
+  def process_engine_version = branch_is_master ? 'latest' : 'develop';
 
 
   NODE_VERSIONS.each {
