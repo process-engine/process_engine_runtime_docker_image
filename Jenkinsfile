@@ -1,18 +1,5 @@
 #!/usr/bin/env groovy
 
-def cleanup_docker() {
-  // Build stages in dockerfiles leave dangling images behind (see https://github.com/moby/moby/issues/34151).
-  // Dangling images are images that are not used anywhere and don't have a tag. It is safe to remove them (see https://stackoverflow.com/a/45143234).
-  // This removes all dangling images
-  sh "docker image prune --force"
-
-  // Some Dockerfiles create volumes using the `VOLUME` command (see https://docs.docker.com/engine/reference/builder/#volume)
-  // running the speedtests creates two dangling volumes. One is from postgres (which contains data), but i don't know about the other one (which is empty)
-  // Dangling volumes are volumes that are not used anywhere. It is safe to remove them.
-  // This removes all dangling volumes
-  sh "docker volume prune --force"
-}
-
 def cleanup_workspace() {
   cleanWs()
   dir("${WORKSPACE}@tmp") {
@@ -109,13 +96,4 @@ node('docker') {
   parallel dockerfile_builds;
 
   cleanup_workspace();
-
-  // Ignore any failures during docker clean up.
-  // 'docker image prune --force' fails if
-  // two builds run simultaneously.
-  try {
-    cleanup_docker();
-  } catch (Exception error) {
-    echo "Failed to cleanup docker $error";
-  }
 }
