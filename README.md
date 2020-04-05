@@ -95,8 +95,3 @@ docker build --build-arg NODE_IMAGE_VERSION=10-alpine \
              --build-arg PROCESS_ENGINE_VERSION=latest \
              --tag 5minds/process_engine_runtime:latest .
 ```
-
-### Wen kann ich auf das Projekt ansprechen?
-
-* [Robin Lenz](mailto:robin.lenz@5minds.de)
-* [Christoph Gnip](mailto:christoph.gnip@5minds.de)
